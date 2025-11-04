@@ -1,0 +1,42 @@
+# --- Import required libraries ---
+import cv2
+import matplotlib.pyplot as plt
+from google.colab import files   # Remove this line if using Jupyter
+import numpy as np
+
+import cv2
+import matplotlib.pyplot as plt
+from google.colab import files
+import numpy as np
+
+# --- Step 1: Upload an image ---
+uploaded = files.upload()  # Choose any image (jpg/png)
+filename = list(uploaded.keys())[0]
+image = cv2.imread(filename)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# --- Step 2: Apply stronger blurring techniques ---
+
+# 1️⃣ Average Blur (larger kernel)
+avg_blur = cv2.blur(image, (15, 15))
+
+# 2️⃣ Gaussian Blur (larger kernel)
+gaussian_blur = cv2.GaussianBlur(image, (15, 15), 0)
+
+# 3️⃣ Median Blur (strong smoothing)
+median_blur = cv2.medianBlur(image, 15)
+
+# 4️⃣ Bilateral Filter (still preserves edges)
+bilateral_blur = cv2.bilateralFilter(image, 25, 100, 100)
+
+# --- Step 3: Display all results ---
+titles = ['Original', 'Average Blur', 'Gaussian Blur', 'Median Blur', 'Bilateral Filter']
+images = [image, avg_blur, gaussian_blur, median_blur, bilateral_blur]
+
+plt.figure(figsize=(15, 8))
+for i in range(5):
+    plt.subplot(2, 3, i + 1)
+    plt.imshow(images[i])
+    plt.title(titles[i])
+    plt.axis('off')
+plt.show()
